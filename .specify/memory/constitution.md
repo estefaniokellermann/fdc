@@ -1,50 +1,70 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: scaffold/unversioned -> 1.0.0
+- Modified principles: placeholder principles -> five Clean Code principles
+- Added sections: Project Constraints; Development Workflow
+- Removed sections: none
+- Follow-up TODOs: RATIFICATION_DATE requires confirmation of the original adoption date
+-->
+
+# FDC Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Clarity Over Cleverness
+Code MUST communicate its intent through descriptive names, small focused functions,
+and straightforward control flow. Abbreviations, hidden side effects, and clever
+constructs are prohibited when a simpler expression is available. This keeps the
+small codebase readable and reduces the cost of every future change.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Single Responsibility
+Each module, function, and class MUST have one clear reason to change. A unit that
+coordinates unrelated concerns MUST be split before new behavior is added. This
+limits coupling and makes behavior easier to inspect locally.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Minimal Design
+The project MUST implement only the behavior required by an accepted request.
+Abstractions, dependencies, configuration, and extension points MUST have a
+current concrete use. YAGNI and the simplest solution that preserves correctness
+take precedence over speculative flexibility.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Explicit Contracts and Safe Errors
+Inputs, outputs, side effects, and failure behavior MUST be explicit at the owning
+boundary. Code MUST validate external input at that boundary and MUST fail with a
+clear, actionable error rather than silently recovering or returning ambiguous
+state. This makes the system predictable without requiring readers to infer rules.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. No Automated Test Suite
+Automated tests MUST NOT be added to this project. Changes MUST instead be checked
+with focused manual verification and the repository's available static, build, or
+runtime checks when applicable. This constraint keeps the intentionally small
+project aligned with its maintenance budget; any change to it requires a
+constitution amendment.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Project Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+The project MUST remain small and simple. New dependencies, layers, generated
+artifacts, and configuration MUST be justified by a concrete requirement and kept
+to the smallest viable scope. Existing patterns and platform capabilities MUST be
+preferred over introducing new frameworks or abstractions.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Every change MUST identify the behavior it affects, make the smallest coherent
+edit, and perform focused manual verification. Reviews MUST check naming,
+responsibility boundaries, unnecessary complexity, input validation, and error
+clarity. Automated test files, test runners, and test-only dependencies MUST NOT
+be introduced.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution is the highest-level project guidance and supersedes conflicting
+local practices. Amendments MUST document the reason, affected principles, and
+expected impact; they require review before adoption. The version follows
+Semantic Versioning: MAJOR for backward-incompatible governance changes, MINOR for
+new or materially expanded principles or sections, and PATCH for clarifications
+that do not change obligations. The Last Amended date MUST use ISO format and be
+updated for every adopted amendment. Each change review MUST verify compliance
+with these principles and record any justified exception explicitly.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): confirm original adoption date | **Last Amended**: 2026-08-18
