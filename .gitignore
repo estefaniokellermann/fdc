@@ -1,0 +1,14 @@
+# PHP runtime and local configuration
+vendor/
+*.log
+*.cache
+*.env
+.env
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp

@@ -17,10 +17,10 @@ description: "Task list for sticker code search and automatic budget"
 
 **Purpose**: Criar a estrutura mínima do módulo sem frameworks ou dependências novas.
 
-- [ ] T001 Criar os diretórios `config/`, `database/migrations/`, `public/css/`, `public/js/`, `src/Controllers/`, `src/Models/`, `src/Repositories/`, `src/Services/`, `src/Views/` e `tests/` conforme [plan.md](plan.md).
-- [ ] T002 [P] Criar o ponto de entrada HTTP mínimo em `public/index.php` com `declare(strict_types=1);` e carregamento explícito dos arquivos necessários.
-- [ ] T003 [P] Criar a configuração de ambiente documentada em `config/database.php` sem credenciais versionadas e sem adicionar dependências em `vendor/`.
-- [ ] T004 [P] Criar o esqueleto visual inicial em `src/Views/home.php`, `public/css/app.css` e `public/js/app.js` para permitir o smoke test da página.
+- [X] T001 Criar os diretórios `config/`, `database/migrations/`, `public/css/`, `public/js/`, `src/Controllers/`, `src/Models/`, `src/Repositories/`, `src/Services/`, `src/Views/` e `tests/` conforme [plan.md](plan.md).
+- [X] T002 [P] Criar o ponto de entrada HTTP mínimo em `public/index.php` com `declare(strict_types=1);` e carregamento explícito dos arquivos necessários.
+- [X] T003 [P] Criar a configuração de ambiente documentada em `config/database.php` sem credenciais versionadas e sem adicionar dependências em `vendor/`.
+- [X] T004 [P] Criar o esqueleto visual inicial em `src/Views/home.php`, `public/css/app.css` e `public/js/app.js` para permitir o smoke test da página.
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
@@ -28,12 +28,12 @@ description: "Task list for sticker code search and automatic budget"
 
 **Checkpoint**: A migração pode ser aplicada em MySQL 5.7 e a aplicação consegue iniciar uma sessão e responder JSON sem expor detalhes internos.
 
-- [ ] T005 Criar `database/migrations/001_create_figurinhas_table.sql` com tabela `figurinhas`, charset `utf8mb4`, collation `utf8mb4_unicode_ci`, preço decimal não negativo e índices em `codigo` e `edicao_album`.
-- [ ] T006 Configurar a fábrica PDO em `config/database.php` com `PDO::ERRMODE_EXCEPTION`, prepared statements nativos e conexão compatível com MySQL 5.7.23-23.
-- [ ] T007 [P] Criar o DTO tipado `src/Models/Figurinha.php` com hidratação explícita de `id`, `codigo`, `nome`, `selecao`, `edicao_album`, `ano_copa`, `categoria` e `preco_unitario`.
-- [ ] T008 [P] Definir em `public/index.php` o roteamento mínimo para `/`, `/busca`, `/orcamento`, `/orcamento/adicionar` e `/orcamento/remover`, incluindo `session_start()` antes do uso da sessão.
-- [ ] T009 [P] Definir helpers de resposta JSON e mensagens seguras em `public/index.php`, com `Content-Type` UTF-8 e códigos HTTP do contrato.
-- [ ] T010 Documentar em `specs/001-sticker-code-budget/quickstart.md` as fixtures manuais de 2018 e 2022, incluindo `BRA10`, `ARG01`, `FWC15` e categorias Escudo, Estádio e Lendárias.
+- [X] T005 Criar `database/migrations/001_create_figurinhas_table.sql` com tabela `figurinhas`, charset `utf8mb4`, collation `utf8mb4_unicode_ci`, preço decimal não negativo e índices em `codigo` e `edicao_album`.
+- [X] T006 Configurar a fábrica PDO em `config/database.php` com `PDO::ERRMODE_EXCEPTION`, prepared statements nativos e conexão compatível com MySQL 5.7.23-23.
+- [X] T007 [P] Criar o DTO tipado `src/Models/Figurinha.php` com hidratação explícita de `id`, `codigo`, `nome`, `selecao`, `edicao_album`, `ano_copa`, `categoria` e `preco_unitario`.
+- [X] T008 [P] Definir em `public/index.php` o roteamento mínimo para `/`, `/busca`, `/orcamento`, `/orcamento/adicionar` e `/orcamento/remover`, incluindo `session_start()` antes do uso da sessão.
+- [X] T009 [P] Definir helpers de resposta JSON e mensagens seguras em `public/index.php`, com `Content-Type` UTF-8 e códigos HTTP do contrato.
+- [X] T010 Documentar em `specs/001-sticker-code-budget/quickstart.md` as fixtures manuais de 2018 e 2022, incluindo `BRA10`, `ARG01`, `FWC15` e categorias Escudo, Estádio e Lendárias.
 
 ## Phase 3: User Story 1 - Encontrar figurinha por código (Priority: P1) 🎯 MVP
 
@@ -43,14 +43,14 @@ description: "Task list for sticker code search and automatic budget"
 
 ### Implementation for User Story 1
 
-- [ ] T011 [P] [US1] Implementar normalização e validação de código/ano em `src/Services/OrcamentoService.php` ou helper compartilhado, removendo espaços e convertendo o código para maiúsculas sem aceitar busca vazia.
-- [ ] T012 [P] [US1] Implementar `buscarPorCodigo(string $codigo, ?int $ano)` em `src/Repositories/FigurinhaRepository.php` usando apenas SQL parametrizado, `LIKE` para parcial, igualdade para exata e filtro opcional por `ano_copa`.
-- [ ] T013 [US1] Implementar `buscarPorId(int $id)` em `src/Repositories/FigurinhaRepository.php` para recuperar novamente o item no servidor antes de qualquer adição ao orçamento.
-- [ ] T014 [US1] Implementar `BuscaController` em `src/Controllers/BuscaController.php` para validar GET, chamar repository e retornar o contrato `GET /busca` definido em `contracts/http-json.md`.
-- [ ] T015 [US1] Integrar a rota `/busca` de `public/index.php` ao `BuscaController`, tratando entradas inválidas como 400, ausência de resultados como lista vazia e falhas operacionais como 500 seguro.
-- [ ] T016 [US1] Renderizar os campos de código/ano e a tabela de resultados em `src/Views/home.php`, mostrando nome, seleção, edição, categoria e preço unitário escapados com `htmlspecialchars`.
-- [ ] T017 [US1] Implementar a busca assíncrona em `public/js/app.js` com `fetch`, estados de carregamento/erro/sem resultado e preservação dos critérios informados.
-- [ ] T018 [US1] Criar `tests/manual_test_orcamento.php` e verificar nele os cenários de busca, registrando PASS/FAIL para normalização, filtro por ano, correspondência parcial e entradas inválidas.
+- [X] T011 [P] [US1] Implementar normalização e validação de código/ano em `src/Services/OrcamentoService.php` ou helper compartilhado, removendo espaços e convertendo o código para maiúsculas sem aceitar busca vazia.
+- [X] T012 [P] [US1] Implementar `buscarPorCodigo(string $codigo, ?int $ano)` em `src/Repositories/FigurinhaRepository.php` usando apenas SQL parametrizado, `LIKE` para parcial, igualdade para exata e filtro opcional por `ano_copa`.
+- [X] T013 [US1] Implementar `buscarPorId(int $id)` em `src/Repositories/FigurinhaRepository.php` para recuperar novamente o item no servidor antes de qualquer adição ao orçamento.
+- [X] T014 [US1] Implementar `BuscaController` em `src/Controllers/BuscaController.php` para validar GET, chamar repository e retornar o contrato `GET /busca` definido em `contracts/http-json.md`.
+- [X] T015 [US1] Integrar a rota `/busca` de `public/index.php` ao `BuscaController`, tratando entradas inválidas como 400, ausência de resultados como lista vazia e falhas operacionais como 500 seguro.
+- [X] T016 [US1] Renderizar os campos de código/ano e a tabela de resultados em `src/Views/home.php`, mostrando nome, seleção, edição, categoria e preço unitário escapados com `htmlspecialchars`.
+- [X] T017 [US1] Implementar a busca assíncrona em `public/js/app.js` com `fetch`, estados de carregamento/erro/sem resultado e preservação dos critérios informados.
+- [X] T018 [US1] Criar `tests/manual_test_orcamento.php` e verificar nele os cenários de busca, registrando PASS/FAIL para normalização, filtro por ano, correspondência parcial e entradas inválidas.
 
 **Checkpoint**: US1 funciona sem orçamento: uma pessoa localiza itens por código e ano, entende seus detalhes e recebe erros seguros.
 
@@ -62,15 +62,15 @@ description: "Task list for sticker code search and automatic budget"
 
 ### Implementation for User Story 2
 
-- [ ] T019 [P] [US2] Criar a estrutura inicial de `$_SESSION['orcamento']` em `src/Services/OrcamentoService.php`, com itens agrupados por identificador e total sempre calculado, nunca recebido do cliente.
-- [ ] T020 [US2] Implementar `adicionar(int $figurinhaId)` em `src/Services/OrcamentoService.php`, validando existência, preço e quantidade antes de mutar a sessão e copiando os dados do catálogo.
-- [ ] T021 [US2] Implementar o limite de 5 unidades por código e erro de negócio em `src/Services/OrcamentoService.php`, preservando o estado anterior quando o limite for excedido.
-- [ ] T022 [US2] Implementar remoção de unidade e recálculo de quantidade/valor em `src/Services/OrcamentoService.php`, eliminando o item ao chegar a zero.
-- [ ] T023 [US2] Implementar `OrcamentoController` em `src/Controllers/OrcamentoController.php` para `GET /orcamento`, `POST /orcamento/adicionar` e `POST /orcamento/remover` conforme `contracts/http-json.md`.
-- [ ] T024 [US2] Integrar as rotas de orçamento em `public/index.php`, validando JSON de entrada, método HTTP, identificador inteiro e status 400/404/409/422/500.
-- [ ] T025 [US2] Renderizar o painel de orçamento em `src/Views/home.php` com itens, quantidade por código, quantidade total, valor total e estado vazio em `R$ 0,00`.
-- [ ] T026 [US2] Implementar em `public/js/app.js` os botões de adicionar/remover e atualização assíncrona do painel após sucesso ou erro, incluindo mensagem do limite de cinco.
-- [ ] T027 [US2] Criar `tests/manual_test_orcamento.php` com verificações de soma por unidade, múltiplos preços, limite cinco, remoção, orçamento vazio e falha sem mutação.
+- [X] T019 [P] [US2] Criar a estrutura inicial de `$_SESSION['orcamento']` em `src/Services/OrcamentoService.php`, com itens agrupados por identificador e total sempre calculado, nunca recebido do cliente.
+- [X] T020 [US2] Implementar `adicionar(int $figurinhaId)` em `src/Services/OrcamentoService.php`, validando existência, preço e quantidade antes de mutar a sessão e copiando os dados do catálogo.
+- [X] T021 [US2] Implementar o limite de 5 unidades por código e erro de negócio em `src/Services/OrcamentoService.php`, preservando o estado anterior quando o limite for excedido.
+- [X] T022 [US2] Implementar remoção de unidade e recálculo de quantidade/valor em `src/Services/OrcamentoService.php`, eliminando o item ao chegar a zero.
+- [X] T023 [US2] Implementar `OrcamentoController` em `src/Controllers/OrcamentoController.php` para `GET /orcamento`, `POST /orcamento/adicionar` e `POST /orcamento/remover` conforme `contracts/http-json.md`.
+- [X] T024 [US2] Integrar as rotas de orçamento em `public/index.php`, validando JSON de entrada, método HTTP, identificador inteiro e status 400/404/409/422/500.
+- [X] T025 [US2] Renderizar o painel de orçamento em `src/Views/home.php` com itens, quantidade por código, quantidade total, valor total e estado vazio em `R$ 0,00`.
+- [X] T026 [US2] Implementar em `public/js/app.js` os botões de adicionar/remover e atualização assíncrona do painel após sucesso ou erro, incluindo mensagem do limite de cinco.
+- [X] T027 [US2] Criar `tests/manual_test_orcamento.php` com verificações de soma por unidade, múltiplos preços, limite cinco, remoção, orçamento vazio e falha sem mutação.
 
 **Checkpoint**: US2 funciona com dados de busca já existentes e entrega um orçamento temporário completo, sem login ou persistência no banco.
 
@@ -82,13 +82,13 @@ description: "Task list for sticker code search and automatic budget"
 
 ### Implementation for User Story 3
 
-- [ ] T028 [P] [US3] Reforçar validação de categoria e `preco_unitario` em `src/Services/OrcamentoService.php`, rejeitando nulo, negativo ou não numérico com erro 422.
-- [ ] T029 [P] [US3] Ajustar a hidratação e a formatação monetária em `src/Models/Figurinha.php` para preservar duas casas decimais e evitar arredondamentos intermediários indevidos.
-- [ ] T030 [US3] Garantir em `src/Repositories/FigurinhaRepository.php` que consultas não usem `WITH`, `ROW_NUMBER`, window functions ou `utf8mb4_0900_ai_ci`, e que o filtro por edição/ano permaneça compatível com MySQL 5.7.
-- [ ] T031 [US3] Exibir categoria e preço específicos por resultado em `src/Views/home.php` e garantir que textos do catálogo sejam escapados antes da renderização.
-- [ ] T032 [US3] Tratar em `src/Controllers/OrcamentoController.php` falhas de item inexistente, sessão indisponível e exceções operacionais sem substituir silenciosamente o orçamento existente.
-- [ ] T033 [US3] Atualizar `public/js/app.js` para diferenciar erros de validação, item indisponível, limite atingido e falha operacional sem exibir detalhes internos.
-- [ ] T034 [US3] Executar no roteiro `tests/manual_test_orcamento.php` os casos de categorias com preços distintos, preço ausente/negativo, item inexistente, sessão com orçamento prévio e resposta segura.
+- [X] T028 [P] [US3] Reforçar validação de categoria e `preco_unitario` em `src/Services/OrcamentoService.php`, rejeitando nulo, negativo ou não numérico com erro 422.
+- [X] T029 [P] [US3] Ajustar a hidratação e a formatação monetária em `src/Models/Figurinha.php` para preservar duas casas decimais e evitar arredondamentos intermediários indevidos.
+- [X] T030 [US3] Garantir em `src/Repositories/FigurinhaRepository.php` que consultas não usem `WITH`, `ROW_NUMBER`, window functions ou `utf8mb4_0900_ai_ci`, e que o filtro por edição/ano permaneça compatível com MySQL 5.7.
+- [X] T031 [US3] Exibir categoria e preço específicos por resultado em `src/Views/home.php` e garantir que textos do catálogo sejam escapados antes da renderização.
+- [X] T032 [US3] Tratar em `src/Controllers/OrcamentoController.php` falhas de item inexistente, sessão indisponível e exceções operacionais sem substituir silenciosamente o orçamento existente.
+- [X] T033 [US3] Atualizar `public/js/app.js` para diferenciar erros de validação, item indisponível, limite atingido e falha operacional sem exibir detalhes internos.
+- [X] T034 [US3] Executar no roteiro `tests/manual_test_orcamento.php` os casos de categorias com preços distintos, preço ausente/negativo, item inexistente, sessão com orçamento prévio e resposta segura.
 
 **Checkpoint**: Todas as histórias estão testáveis de forma independente após a fundação; o cálculo usa o preço da própria categoria e entradas inválidas não mutam a sessão.
 
@@ -96,12 +96,12 @@ description: "Task list for sticker code search and automatic budget"
 
 **Purpose**: Fechar segurança, documentação, desempenho e aceitação manual do módulo completo.
 
-- [ ] T035 [P] Revisar `public/index.php`, `src/Controllers/BuscaController.php`, `src/Controllers/OrcamentoController.php` e `src/Views/home.php` para confirmar `declare(strict_types=1);`, validação na fronteira, `htmlspecialchars` e `json_encode` sem dados não escapados.
-- [ ] T036 [P] Revisar `config/database.php` e `src/Repositories/FigurinhaRepository.php` para confirmar PDO parametrizado, charset/collation corretos e ausência de recursos MySQL 8.
-- [ ] T037 [P] Atualizar `specs/001-sticker-code-budget/quickstart.md` com qualquer ajuste necessário nos comandos, fixtures ou mensagens observadas durante a validação.
-- [ ] T038 Executar todos os cenários do [quickstart.md](quickstart.md) no navegador e registrar o resultado manual do módulo completo.
-- [ ] T039 Executar 10 buscas exatas no ambiente local e confirmar que pelo menos 95% terminam em até 2 segundos, registrando a observação no relatório da entrega.
-- [ ] T040 Confirmar por `git status` que não foram adicionados PHPUnit, Composer, frameworks pesados ou arquivos de credenciais em `vendor/`/repositório.
+- [X] T035 [P] Revisar `public/index.php`, `src/Controllers/BuscaController.php`, `src/Controllers/OrcamentoController.php` e `src/Views/home.php` para confirmar `declare(strict_types=1);`, validação na fronteira, `htmlspecialchars` e `json_encode` sem dados não escapados.
+- [X] T036 [P] Revisar `config/database.php` e `src/Repositories/FigurinhaRepository.php` para confirmar PDO parametrizado, charset/collation corretos e ausência de recursos MySQL 8.
+- [X] T037 [P] Atualizar `specs/001-sticker-code-budget/quickstart.md` com qualquer ajuste necessário nos comandos, fixtures ou mensagens observadas durante a validação.
+- [ ] T038 Executar todos os cenários do [quickstart.md](quickstart.md) no navegador após disponibilizar MySQL 5.7 e registrar o resultado manual do módulo completo.
+- [ ] T039 Executar 10 buscas exatas no ambiente local após disponibilizar MySQL 5.7 e confirmar que pelo menos 95% terminam em até 2 segundos, registrando a observação no relatório da entrega.
+- [X] T040 Confirmar por `git status` que não foram adicionados PHPUnit, Composer, frameworks pesados ou arquivos de credenciais em `vendor/`/repositório.
 
 ## Dependencies & Execution Order
 
