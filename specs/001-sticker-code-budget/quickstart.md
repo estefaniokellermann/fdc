@@ -48,3 +48,10 @@ O script deve imprimir resultados PASS/FAIL para normalização, soma por catego
 - Verificar os cenários de `spec.md` para as histórias P1 e P2.
 - Cronometrar 10 buscas exatas e confirmar que pelo menos 95% terminam em até 2 segundos em condições normais.
 - Confirmar visualmente que textos vindos do catálogo aparecem escapados e que respostas JSON não expõem exceções internas.
+
+## Resultado da validação remota (2026-08-18)
+
+- MySQL remoto confirmado em `5.7.23-23`, com tabela `figurinhas` em `utf8mb4_unicode_ci`.
+- Os oito cenários funcionais foram executados via HTTP com sessão persistente: busca normalizada, busca parcial, validações, categorias, limite de 5, recarga, remoção até vazio e item inexistente.
+- Total das fixtures de teste por categoria: `6.75`; orçamento vazio após remoção: `0.00`.
+- Dez buscas exatas: `100%` abaixo de 2 segundos; média de aproximadamente `954 ms` e máximo de aproximadamente `1.03 s`.

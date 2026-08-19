@@ -99,8 +99,8 @@ description: "Task list for sticker code search and automatic budget"
 - [X] T035 [P] Revisar `public/index.php`, `src/Controllers/BuscaController.php`, `src/Controllers/OrcamentoController.php` e `src/Views/home.php` para confirmar `declare(strict_types=1);`, validação na fronteira, `htmlspecialchars` e `json_encode` sem dados não escapados.
 - [X] T036 [P] Revisar `config/database.php` e `src/Repositories/FigurinhaRepository.php` para confirmar PDO parametrizado, charset/collation corretos e ausência de recursos MySQL 8.
 - [X] T037 [P] Atualizar `specs/001-sticker-code-budget/quickstart.md` com qualquer ajuste necessário nos comandos, fixtures ou mensagens observadas durante a validação.
-- [ ] T038 Executar todos os cenários do [quickstart.md](quickstart.md) no navegador após disponibilizar MySQL 5.7 e registrar o resultado manual do módulo completo.
-- [ ] T039 Executar 10 buscas exatas no ambiente local após disponibilizar MySQL 5.7 e confirmar que pelo menos 95% terminam em até 2 segundos, registrando a observação no relatório da entrega.
+- [X] T038 Executar todos os cenários do [quickstart.md](quickstart.md) no navegador após disponibilizar MySQL 5.7 e registrar o resultado manual do módulo completo.
+- [X] T039 Executar 10 buscas exatas no ambiente local após disponibilizar MySQL 5.7 e confirmar que pelo menos 95% terminam em até 2 segundos, registrando a observação no relatório da entrega.
 - [X] T040 Confirmar por `git status` que não foram adicionados PHPUnit, Composer, frameworks pesados ou arquivos de credenciais em `vendor/`/repositório.
 
 ## Dependencies & Execution Order
