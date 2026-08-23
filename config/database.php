@@ -10,6 +10,10 @@ function createDatabaseConnection(): PDO
     $username = getenv('FDC_DB_USER') ?: 'figurinh_copa';
     $password = getenv('FDC_DB_PASSWORD') ?: '~zK[O&alHYB8';
 
+    if ($username === '') {
+        throw new RuntimeException('Defina FDC_DB_USER para conectar ao banco.');
+    }
+
     $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $host, $port, $database);
 
     return new PDO($dsn, $username, $password, [

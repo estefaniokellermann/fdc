@@ -4,6 +4,7 @@ vendor/
 *.cache
 *.env
 .env
+.env*
 
 # Local editor and operating-system files
 .vscode/

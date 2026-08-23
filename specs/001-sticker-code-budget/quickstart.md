@@ -4,6 +4,7 @@
 
 - PHP 8.2+ com extensão PDO MySQL habilitada.
 - MySQL 5.7.23-23 acessível.
+- Variáveis de ambiente `FDC_DB_HOST`, `FDC_DB_PORT`, `FDC_DB_NAME`, `FDC_DB_USER` e `FDC_DB_PASSWORD` definidas para conexão.
 - Banco configurado conforme `config/database.php` e migração aplicada.
 
 ## Preparar banco
