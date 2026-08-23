@@ -35,3 +35,15 @@
 - **Decision**: Expor busca e ações de orçamento como endpoints HTTP JSON com respostas de sucesso/erro e status apropriados.
 - **Rationale**: Permite `fetch` assíncrono sem introduzir framework e mantém entradas, saídas e falhas explícitas na fronteira.
 - **Alternatives considered**: Requisições HTML completas para cada ação. Foram rejeitadas por piorarem a atualização dinâmica exigida pelo módulo.
+
+## Decisão: UI mobile-first sem dependências
+
+- **Decision**: Implementar o tema e as micro-interações em CSS nativo, com breakpoints responsivos, badges por categoria, toasts e uma barra de orçamento fixa no rodapé em telas pequenas.
+- **Rationale**: Atende FR-015 a FR-019 e TC-008 a TC-010 sem introduzir framework visual, CDN ou pacote de terceiros; mantém o controle do layout e da acessibilidade dentro do projeto.
+- **Alternatives considered**: Tailwind/Bootstrap via CDN e bibliotecas de toast/spinner. Foram rejeitados por aumentarem dependências de runtime e não serem necessários para os estados definidos.
+
+## Decisão: Feedback assíncrono idempotente
+
+- **Decision**: Desabilitar o botão durante cada requisição, atualizar o painel apenas após resposta válida, mostrar confirmação por até 1,5 segundo e usar toasts para eventos rápidos.
+- **Rationale**: Evita cliques duplicados, comunica latência e garante zero page reload sem confiar no estado calculado pelo navegador.
+- **Alternatives considered**: Atualização otimista permanente do total. Foi rejeitada porque poderia exibir preço/quantidade divergentes em falhas de rede ou limite de negócio.

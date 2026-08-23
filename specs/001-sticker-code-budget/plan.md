@@ -8,7 +8,7 @@
 
 ## Summary
 
-Entregar uma busca pública por código de figurinha, com filtro opcional por ano, e um orçamento temporário por sessão com cálculo server-side, limite de cinco unidades por código e preços por categoria. A implementação será PHP 8.2+ nativo, organizada em camadas pequenas, com PDO parametrizado para MySQL 5.7, endpoints JSON e JavaScript `fetch` sem dependências de vendor.
+Entregar uma busca pública por código de figurinha, com filtro opcional por ano, e um orçamento temporário por sessão com cálculo server-side, limite de cinco unidades por código e preços por categoria. A implementação será PHP 8.2+ nativo, organizada em camadas pequenas, com PDO parametrizado para MySQL 5.7, endpoints JSON e JavaScript `fetch` sem dependências de vendor. A interface terá tema escuro esportivo, badges de categoria, feedback assíncrono imediato, empty states e adaptação mobile com barra de orçamento fixa.
 
 ## Technical Context
 
@@ -30,9 +30,9 @@ Entregar uma busca pública por código de figurinha, com filtro opcional por an
 
 **Project Type**: Módulo web MVC leve em PHP
 
-**Performance Goals**: Pelo menos 95% das buscas exatas em até 2 segundos em condições normais; atualização assíncrona do orçamento após cada ação
+**Performance Goals**: Pelo menos 95% das buscas exatas em até 2 segundos em condições normais; feedback visual de ações em menos de 300ms; atualização assíncrona do orçamento após cada ação
 
-**Constraints**: MySQL 5.7 sem CTE/window functions/collations MySQL 8; SQL somente parametrizado; limite 5 por código; sem login, checkout ou persistência do carrinho
+**Constraints**: MySQL 5.7 sem CTE/window functions/collations MySQL 8; SQL somente parametrizado; limite 5 por código; sem login, checkout ou persistência do carrinho; UI mobile-first, dark/sportiva, acentos esmeralda e transições CSS nativas
 
 **Scale/Scope**: Uma página pública, catálogo de figurinhas, busca e painel de orçamento temporário; sem administração de catálogo nesta fase
 
@@ -71,6 +71,7 @@ database/
   └── 001_create_figurinhas_table.sql
 public/
 ├── index.php
+├── .htaccess
 ├── css/app.css
 └── js/app.js
 src/
@@ -117,20 +118,25 @@ tests/
 - [ ] Configurar sessão antes dos controllers e respostas JSON com `json_encode` e charset correto.
 - [ ] Garantir que erros não revelem exceções, SQL, credenciais ou caminhos internos.
 
-### Fase 4: Interface
+### Fase 4: Interface e experiência
 
-- [ ] Criar `src/Views/home.php` com formulário de código/ano, tabela de resultados e painel de orçamento.
+- [ ] Criar `src/Views/home.php` com formulário de código/ano, tabela de resultados, painel de orçamento, empty state e sugestões de códigos populares.
 - [ ] Escapar todo conteúdo de catálogo com `htmlspecialchars` no HTML.
 - [ ] Criar `public/js/app.js` com `fetch` para busca, adição, remoção e atualização do painel sem recarga completa.
-- [ ] Criar `public/css/app.css` somente com estilos necessários; usar HTML/CSS puro ou CDN sem adicionar pacote ao projeto.
-- [ ] Exibir estados vazio, carregando, sem resultado, sucesso e limite atingido.
+- [ ] Criar `public/css/app.css` com tema escuro/esportivo, acentos `#059669`/`#10b981`, tipografia hierárquica, badges de categoria e valores monetários em formato brasileiro.
+- [ ] Implementar loading/spinner no botão de adição, confirmação temporária de até 1,5 segundo e toasts para sucesso, remoção, limite e falha operacional.
+- [ ] Exibir estados vazio, carregando, sem resultado, sucesso e limite atingido, incluindo sugestões acionáveis como `BRA10` e `ARG01`.
+- [ ] Garantir layout mobile-first; em smartphones, consolidar o orçamento em barra fixa no rodapé sem ocultar conteúdo ou controles.
+- [ ] Adicionar transições CSS nativas para hover, entrada de itens, toasts e abertura/fechamento do painel.
+- [ ] Criar `public/.htaccess` para encaminhar rotas amigáveis ao `index.php` quando o servidor for Apache.
 
 ### Fase 5: Verificação manual
 
 - [ ] Aplicar a migração em MySQL 5.7.23-23 e inserir fixtures de 2018/2022 nas categorias Escudo, Estádio e Lendárias.
 - [ ] Executar o script manual por CLI e corrigir qualquer FAIL.
 - [ ] Executar os oito cenários do [quickstart.md](quickstart.md) no navegador.
-- [ ] Confirmar busca normalizada, filtro por ano, soma, persistência na sessão, limite 5, XSS escapado e erros seguros.
+- [ ] Confirmar busca normalizada, filtro por ano, soma, persistência na sessão, limite 5, XSS escapado, erros seguros e feedback visual.
+- [ ] Validar visualmente desktop e smartphone: badges de categoria, toasts, loading, empty state, transições e barra fixa do orçamento.
 - [ ] Medir 10 buscas exatas e confirmar o critério de 95% em até 2 segundos.
 
 ## Complexity Tracking

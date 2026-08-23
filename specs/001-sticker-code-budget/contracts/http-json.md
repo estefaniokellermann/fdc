@@ -80,3 +80,11 @@ Os endpoints retornam `Content-Type: application/json; charset=utf-8`. O cliente
 - Controllers validam método, entrada e formato antes de chamar services.
 - Views escapam texto com `htmlspecialchars`; JSON é serializado apenas por `json_encode`.
 - Mensagens expostas são estáveis e acionáveis; exceções internas são registradas pelo mecanismo disponível sem serem retornadas ao cliente.
+
+## Contrato de estados da interface
+
+- Enquanto `GET /busca` aguarda resposta, a área de resultados exibe estado de carregamento e preserva os critérios informados.
+- Para `resultados: []`, a interface exibe empty state com sugestões acionáveis, sem tratar a ausência como erro técnico.
+- Durante `POST /orcamento/adicionar`, o botão correspondente fica em loading e não aceita cliques duplicados; no sucesso, mostra confirmação temporária por até 1,5 segundo.
+- Respostas `409`, `404`, `422` e `500` são exibidas como toast flutuante com mensagem acionável; o total anterior permanece visível quando a mutação falha.
+- Em viewport móvel, o resumo de orçamento permanece em barra fixa no rodapé e não pode cobrir o formulário, resultados ou controles de remoção.

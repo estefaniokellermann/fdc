@@ -85,6 +85,11 @@ Como responsável pelo portal, quero que cada item use o preço de sua categoria
 - **FR-012**: O sistema MUST preventivamente validar código, ano, identificação do item, categoria, preço e quantidade antes de alterar o orçamento.
 - **FR-013**: O sistema MUST manter o orçamento existente intacto quando uma operação de adição falhar.
 - **FR-014**: O módulo MUST NOT include login, checkout, gateway de pagamento, frete ou persistência do carrinho em banco nesta fase.
+- **FR-015**: A interface MUST indicar visualmente a categoria de cada figurinha usando elementos gráficos distintos (pílulas/badges coloridas com hierarquia para Comum, Escudo, Estádio e destaques reluzentes/dourados para Lendárias).
+- **FR-016**: As ações de adicionar/remover itens do orçamento MUST atualizar os contadores do painel e o valor total instantaneamente sem recarregar a página (Zero Page Reload).
+- **FR-017**: O botão de adição MUST exibir feedback visual imediato de carregamento (spinner/loading) durante a requisição assíncrona e estado temporário de confirmação/sucesso por até 1,5 segundo.
+- **FR-018**: O sistema MUST exibir notificações flutuantes (toasts) no canto da tela para comunicar eventos rápidos, como a rejeição ao tentar ultrapassar 5 unidades por código ou remoção de um item.
+- **FR-019**: Quando a busca não retornar resultados, a interface MUST apresentar um estado vazio (empty state) amigável com elementos ilustrativos e sugestões acionáveis de códigos populares (ex: "Tente buscar por `BRA10` ou `ARG01`").
 
 ### Technical Constraints
 
@@ -95,6 +100,9 @@ Como responsável pelo portal, quero que cada item use o preço de sua categoria
 - **TC-005**: A interface deve usar HTML5, Tailwind CSS ou Bootstrap 5 e JavaScript ES6+ assíncrono via `fetch`, mantendo a busca e atualização do orçamento responsivas.
 - **TC-006**: A camada de Services deve ser coberta por PHPUnit conforme solicitado para esta funcionalidade. A constituição atual do projeto proíbe testes automatizados; o planejamento deve obter aprovação para emendar essa regra ou registrar formalmente a exceção antes de adicionar os testes.
 - **TC-007**: Entradas externas devem ser normalizadas e validadas na fronteira, e erros devem retornar mensagens acionáveis sem expor detalhes internos.
+- **TC-008**: O layout e os componentes de UI devem ser desenvolvidos com abordagem mobile-first e responsividade completa. Em dispositivos móveis (smartphones), o painel de orçamento deve se consolidar em uma barra flutuante fixa no rodapé para manter visibilidade contínua sem comprometer a rolagem.
+- **TC-009**: Todas as micro-interações de interface (hover em cards, exibição de modais/painéis e entrada de novos itens no orçamento) devem utilizar transições em CSS nativo (ex: `transition: all 0.2s ease-in-out`), evitando atrasos ou comportamentos abruptos.
+- **TC-010**: O tema visual deve utilizar uma paleta escura/esportiva com acentos em verde esmeralda (`#059669` / `#10b981`) e tipografia com hierarquia clara (destacando códigos de figurinhas em bold/monospace e os valores monetários em formato legível no padrão brasileiro `R$`).
 
 ### Key Entities *(include if feature involves data)*
 
@@ -114,6 +122,8 @@ Como responsável pelo portal, quero que cada item use o preço de sua categoria
 - **SC-005**: Em 100% dos orçamentos válidos, o total exibido corresponde à soma dos preços unitários de todas as unidades selecionadas, incluindo categorias com preços diferentes.
 - **SC-006**: Pelo menos 90% dos usuários de teste conseguem interpretar a quantidade total e o valor acumulado sem assistência adicional.
 - **SC-007**: Nenhuma funcionalidade desta fase exige login, checkout, frete ou gravação permanente do carrinho no banco de dados.
+- **SC-008**: 100% das ações de adição/remoção de itens no orçamento fornecem feedback visual instantâneo na UI em menos de 300ms via JavaScript.
+- **SC-009**: Em testes de usabilidade em dispositivos móveis, 100% dos usuários conseguem visualizar a barra flutuante de orçamento no rodapé e identificar o valor acumulado sem necessidade de rolagem manual da página.
 
 ## Assumptions
 

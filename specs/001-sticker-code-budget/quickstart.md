@@ -32,6 +32,10 @@ Abrir `http://localhost:8080/`.
 6. Recarregar a página: o orçamento deve permanecer na sessão.
 7. Remover unidades até esvaziar: o painel deve mostrar quantidade zero e `R$ 0,00`.
 8. Simular item inexistente/preço inválido: a ação deve falhar sem modificar o orçamento anterior.
+9. Confirmar badges visuais distintos para Comum, Escudo, Estádio e Lendárias, incluindo destaque dourado para Lendárias.
+10. Adicionar e remover um item: confirmar zero reload, spinner imediato, confirmação temporária e toast correspondente.
+11. Buscar um código inexistente: confirmar empty state com sugestões `BRA10` e `ARG01`.
+12. Abrir a página em smartphone: confirmar barra fixa de orçamento no rodapé, sem sobreposição de conteúdo.
 
 ## Script manual
 
@@ -48,6 +52,7 @@ O script deve imprimir resultados PASS/FAIL para normalização, soma por catego
 - Verificar os cenários de `spec.md` para as histórias P1 e P2.
 - Cronometrar 10 buscas exatas e confirmar que pelo menos 95% terminam em até 2 segundos em condições normais.
 - Confirmar visualmente que textos vindos do catálogo aparecem escapados e que respostas JSON não expõem exceções internas.
+- Confirmar responsividade, contraste, transições CSS, badges, loading, toasts e empty states em desktop e smartphone.
 
 ## Resultado da validação remota (2026-08-18)
 
@@ -55,3 +60,10 @@ O script deve imprimir resultados PASS/FAIL para normalização, soma por catego
 - Os oito cenários funcionais foram executados via HTTP com sessão persistente: busca normalizada, busca parcial, validações, categorias, limite de 5, recarga, remoção até vazio e item inexistente.
 - Total das fixtures de teste por categoria: `6.75`; orçamento vazio após remoção: `0.00`.
 - Dez buscas exatas: `100%` abaixo de 2 segundos; média de aproximadamente `954 ms` e máximo de aproximadamente `1.03 s`.
+
+## Resultado da validação visual (2026-08-19)
+
+- Home carregada localmente em viewport desktop e smartphone, com título, formulário, sugestões e orçamento acessíveis.
+- Em viewport móvel (`362px`), o painel de orçamento usa `position: fixed` no rodapé; em viewport ampla (`1152px`), retorna ao fluxo normal em grade de duas colunas.
+- CSS e JavaScript foram carregados sem erro; `node --check public/js/app.js` e lint PHP passaram.
+- Badges de categoria, empty state, tema escuro, transições, loading/toasts e atualização do painel sem navegação foram verificados no navegador.
